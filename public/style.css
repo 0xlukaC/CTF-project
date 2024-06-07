@@ -27,6 +27,7 @@
 }
 
 body {
+	cursor: none;
 	background-color: #020202;
 	display: flex;
 	justify-content: center;

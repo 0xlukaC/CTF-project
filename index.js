@@ -15,6 +15,9 @@ wss.on('connection', function connection(ws) {
 
   ws.on('message', function message(data) {
     console.log('received: %s', data);
+	if (data.toString() == "broadcast") {
+		ws.send('CTF{SUPERHOT}');
+	}
   });
 
   ws.send('something');
