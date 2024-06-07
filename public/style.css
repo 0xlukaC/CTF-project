@@ -1,0 +1,161 @@
+:root {
+	--gradient: linear-gradient(
+		to right,
+		transparent,
+		transparent 30%,
+		#d40125 30%,
+		#d40125 69.5%,
+		transparent 1%,
+		transparent
+	);
+	--white: linear-gradient(
+		to right,
+		transparent,
+		transparent 30%,
+		#eeeeee 30%,
+		#eeeeee 69.5%,
+		transparent 1%,
+		transparent
+	);
+}
+/* Blue: #5beefe */
+/* CURSOR == NULL !IMPORTANT */
+
+@font-face {
+	font-family: superFont;
+	src: url(./fixedsys-2-monospaced.ttf);
+}
+
+body {
+	background-color: #020202;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	margin: 0;
+	font-family: superFont;
+	flex-direction: column;
+}
+
+#container {
+	display: flex;
+	justify-content: center;
+	/* - background-color: #d40125; */
+	width: 50%;
+	text-align: center;
+	/* d - background: linear-gradient(to right, transparent, #d40125, transparent); */
+}
+
+.button {
+	/* - background: linear-gradient(to right, transparent, #d40125, transparent); */
+	color: #fef7fd;
+	background: var(--gradient),
+		linear-gradient(to right, transparent, #d40124, transparent);
+	animation: blinds 0.7s ease-in infinite alternate;
+}
+
+@keyframes blinds {
+	0% {
+		background-image: var(--gradient),
+			linear-gradient(to right, transparent, #d40124, transparent);
+	}
+	10% {
+		background-image: var(--gradient),
+			linear-gradient(to right, transparent, #d40124ce, transparent);
+	}
+	35% {
+		background-image: var(--gradient),
+			linear-gradient(to right, transparent, #d40124a0, transparent);
+	}
+	52% {
+		background-image: var(--gradient),
+			linear-gradient(to right, transparent, #d40124d7, transparent);
+	}
+	78% {
+		background-image: var(--gradient),
+			linear-gradient(to right, transparent, #d40124b1, transparent);
+	}
+	92% {
+		background-image: var(--gradient),
+			linear-gradient(to right, transparent, #d40124a5, transparent);
+	}
+}
+
+/*  linear-gradient(to right, transparent 10%, #d40125, transparent 100%) */
+
+@keyframes flicker {
+	0% {
+		background: transparent;
+	}
+	20% {
+		background-position: 100% 50%;
+	}
+	52% {
+		background: transparent;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+h2 {
+	display: flex;
+	text-transform: uppercase;
+	padding: 1vh 4vw;
+	background: linear-gradient(to left, transparent 10%, #eeeeee76 200%);
+	transition: background 1s ease-out;
+	animation: flicker 0.2s ease-out infinite;
+}
+/* grey: #73818b */
+
+#instructions {
+	color: #73818b;
+	font-size: 1.5vw;
+	position: absolute;
+	bottom: 0;
+}
+
+/*  */
+/*  */
+
+.enter {
+	background-image: var(--white),
+		linear-gradient(to right, #eeeeee00 20%, #5beefe, #eeeeee00 20%);
+	animation: white-out 0.3s ease;
+	color: #5beefe;
+}
+
+@keyframes white-out {
+	0% {
+		background-image: var(--white),
+			linear-gradient(to right, #eeeeee00 20%, #5beefe, #eeeeee00 80%);
+	}
+	20% {
+		background-image: var(--white),
+			linear-gradient(to right, #eeeeee00 15%, #5beefe, #eeeeee00 85%);
+	}
+	40% {
+		background-image: var(--white),
+			linear-gradient(to right, #eeeeee00 10%, #5beefe, #eeeeee00 90%);
+	}
+	60% {
+		background-image: var(--white),
+			linear-gradient(to right, #eeeeee00 5%, #5beefe, #eeeeee00 95%);
+	}
+	100% {
+		background-image: var(--white),
+			linear-gradient(to right, #eeeeee00, #5beefe, #eeeeee00);
+	}
+}
+
+#message {
+	display: none;
+	border-style: solid;
+	border-color: #73818b;
+	color: #73818b;
+	font-family: superFont;
+}
+
+#message p {
+	padding: 1vw 3vw;
+}
