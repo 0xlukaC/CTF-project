@@ -1,47 +1,156 @@
 const express = require("express");
 const app = express();
 
+const randNum = (max, min) => Math.floor(Math.random() * (max - min + 1)) + min;
 app.use(express.static("public")); // uses the public folder for static files
-// let rand = Math.floor(Math.random() * (3100 - 3000 + 1)) + 3000;
+// randomise port 3000 - 3500
 app.listen(3000);
 
+const net = require("net");
 
-const { WebSocketServer } = require('ws');
+let arr = [];
+let sending;
+
+async function findOpenPort(startPort) {
+	let port = startPort;
+
+	while (true) {
+		try {
+			let inUse = await checkPort(port);
+			if (!inUse) break;
+			else port++;
+		} catch (error) {
+			port++;
+		}
+	}
+	return port;
+}
+
+async function randPorts(ws, n) {
+	sending = randNum(0, n);
+	for (let i = 0; i < n; i++) {
+		let randp = await findOpenPort(randNum(2000, 1000));
+
+		ws.send(randp.toString());
+		if (i == sending) sending = randp;
+		arr.push(randp);
+	}
+
+	arr.forEach((element) => {
+		console.log(element);
+	});
+	broadcast(arr, sending);
+}
+
+// checks if port is in use
+
+function checkPort(port) {
+	return new Promise((resolve, reject) => {
+		let tester = net.createServer();
+
+		tester.once("error", (err) => {
+			if (err.code === "EADDRINUSE") resolve(true);
+			else reject(err); // some other error (may delete l8er)
+		});
+
+		tester.once("listening", () => {
+			tester.close();
+			resolve(false);
+		});
+		tester.listen(port);
+	});
+}
+
+function broadcast(arr, flagPort) {
+	let falses = Math.round(arr.length / 4);
+	console.log("yo");
+	arr.forEach((port) => {
+		const tcpServer = net.createServer((socket) => {
+			console.log(`client connected to TCP server on port ${port}`);
+		});
+
+		tcpServer.listen(port, () => {
+			console.log(`TCP server listening on port ${port}`);
+		});
+
+		tcpServer.on("connection", (socket) => {
+			if (port == flagPort) socket.write("CTF{SUPERHOT}");
+			else {
+				if (falses != 0) {
+					falses--;
+					tcpServer.close();
+				}
+				socket.write("wrong port");
+			}
+		});
+	});
+}
+
+const { WebSocketServer } = require("ws");
 
 const wss = new WebSocketServer({ port: 8080 });
 
-wss.on('connection', function connection(ws) {
-  ws.on('error', console.error);
+wss.on("connection", function connection(ws) {
+	ws.on("error", console.error);
 
-  ws.on('message', function message(data) {
-    console.log('received: %s', data);
-	if (data.toString() == "broadcast") {
-		ws.send('CTF{SUPERHOT}');
-	}
-  });
+	//randPorts(ws, Math.ceil(70 / (780 / 60)));
+	ws.on("message", function message(data) {
+		console.log("Time: %s", data / 60, 70 / (data / 60));
 
-  ws.send('something');
+		if (typeof arr != "undefined" && arr.length == 0)
+			randPorts(ws, Math.ceil(70 / (data / 60)));
+		else
+			arr.forEach((element) => {
+				ws.send(element);
+			});
+	});
+	//ws.send("connected");
 });
 
+// function checkPort(port) {
+// 	console.log("nope");
+// 	let tester = net.createServer();
+// 	return new Promise((resolve) => {
+// 		tester.once("error", function (err) {
+// 			if (err.code === "EADDRINUSE") resolve(true);
+// 			resolve(false);
+// 		});
+// 		tester.once("listening", () => {
+// 			tester.close();
+// 			resolve(false);
+// 		});
+// 		tester.listen(port);
+// 	});
+// }
 
+// function checkPort(port) {
+// 	let tester = net.createServer();
 
-// const {Server} = require('net')
+// 	tester.on("error", function (err) {
+// 		if (err.code === ("ERR_SERVER_ALREADY_LISTEN" || "EADDRINUSE")) {
+// 			tester.close();
+// 			return true;
+// 		}
+// 	});
+// 	tester.listen(port); // because its async
+// 	tester.close();
+// }
 
-// const server = new Server(socket=> {
-//   console.log('client connected')
+// function checkPort(port) {
+// 	console.log("in");
+// 	let inuse = false;
+// 	let tester = net.createServer();
 
-//   // Attach listeners for the socket
-//   socket.on('data', message => {
-//     console.log('message')
-
-//     // Write back to the client
-//     socket.write('world')
-//   })
-
-//   // Send the client a message to disconnect from the server after a minute
-//   setTimeout(() => socket.write('disconnect'), 5000)
-
-//   socket.on('end', () => console.log('client disconnected'))
-// })
-
-// server.listen('localhost', () => console.log('listening'))
+// 	tester.on("error", (err) => {
+// 		if (err.code == "EADDRINUSE") {
+// 			inuse = true;
+// 		}
+// 	});
+// 	tester.on("listening", () => {
+// 		tester.close();
+// 	});
+// 	tester.listen(port); // because its async
+// 	if (inuse) return true;
+// 	return false;
+// }
+// if (err.code === ("ERR_SERVER_ALREADY_LISTEN" || "EADDRINUSE"))
