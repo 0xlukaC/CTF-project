@@ -4,7 +4,9 @@ const app = express();
 const randNum = (max, min) => Math.floor(Math.random() * (max - min + 1)) + min;
 app.use(express.static("public")); // uses the public folder for static files
 // randomise port 3000 - 3500
-app.listen(3000);
+app.listen(80);
+// let randnumber = randNum(3010, 3000);
+// app.listen(randnumber);
 
 const net = require("net");
 
@@ -106,51 +108,3 @@ wss.on("connection", function connection(ws) {
 	});
 	//ws.send("connected");
 });
-
-// function checkPort(port) {
-// 	console.log("nope");
-// 	let tester = net.createServer();
-// 	return new Promise((resolve) => {
-// 		tester.once("error", function (err) {
-// 			if (err.code === "EADDRINUSE") resolve(true);
-// 			resolve(false);
-// 		});
-// 		tester.once("listening", () => {
-// 			tester.close();
-// 			resolve(false);
-// 		});
-// 		tester.listen(port);
-// 	});
-// }
-
-// function checkPort(port) {
-// 	let tester = net.createServer();
-
-// 	tester.on("error", function (err) {
-// 		if (err.code === ("ERR_SERVER_ALREADY_LISTEN" || "EADDRINUSE")) {
-// 			tester.close();
-// 			return true;
-// 		}
-// 	});
-// 	tester.listen(port); // because its async
-// 	tester.close();
-// }
-
-// function checkPort(port) {
-// 	console.log("in");
-// 	let inuse = false;
-// 	let tester = net.createServer();
-
-// 	tester.on("error", (err) => {
-// 		if (err.code == "EADDRINUSE") {
-// 			inuse = true;
-// 		}
-// 	});
-// 	tester.on("listening", () => {
-// 		tester.close();
-// 	});
-// 	tester.listen(port); // because its async
-// 	if (inuse) return true;
-// 	return false;
-// }
-// if (err.code === ("ERR_SERVER_ALREADY_LISTEN" || "EADDRINUSE"))

@@ -1,1 +1,1 @@
-By default, websockets and webpages of port number 80 don't have to be explicitly written. 
+Hint 1: The error in script.js may reveal the port something is broadcasting on
