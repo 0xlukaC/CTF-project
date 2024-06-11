@@ -4,7 +4,7 @@ const app = express();
 const randNum = (max, min) => Math.floor(Math.random() * (max - min + 1)) + min;
 app.use(express.static("public")); // uses the public folder for static files
 // randomise port 3000 - 3500
-app.listen(80);
+app.listen(3000);
 // let randnumber = randNum(3010, 3000);
 // app.listen(randnumber);
 
