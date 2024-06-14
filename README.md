@@ -1,5 +1,6 @@
 #### Make sure you have `TCPdump` and `netstat` installed
-![Frame 1 (2)](https://github.com/cyber-chalk/CTF-project/assets/52194915/8d2f68b3-c569-4352-9cfc-8cdc1263e68e)
 
-![Frame 2](https://github.com/cyber-chalk/CTF-project/assets/52194915/9dac6a45-6a88-49c3-8e46-7f07fd2aacb5)
+![Frame 1 (3)](https://github.com/cyber-chalk/CTF-project/assets/52194915/98f822dc-8e2e-4d76-8129-69ea0fb3e73a)
 
+
+![Frame 2 (1)](https://github.com/cyber-chalk/CTF-project/assets/52194915/d5388368-4691-4009-94dc-466509f8d779)
