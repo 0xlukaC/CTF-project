@@ -3,10 +3,10 @@ const app = express();
 
 const randNum = (max, min) => Math.floor(Math.random() * (max - min + 1)) + min;
 app.use(express.static("public")); // uses the public folder for static files
-// randomise port 3000 - 3500
-app.listen(3000);
-// let randnumber = randNum(3010, 3000);
-// app.listen(randnumber);
+// randomise port 3000 - 3010
+// app.listen(3000);
+let randnumber = randNum(3010, 3000);
+app.listen(randnumber);
 
 const net = require("net");
 
@@ -39,7 +39,7 @@ async function randPorts(ws, n) {
 	}
 
 	arr.forEach((element) => {
-		console.log(element);
+		// console.log(element);
 	});
 	broadcast(arr, sending);
 }
@@ -68,11 +68,11 @@ function broadcast(arr, flagPort) {
 	console.log("yo");
 	arr.forEach((port) => {
 		const tcpServer = net.createServer((socket) => {
-			console.log(`client connected to TCP server on port ${port}`);
+			// console.log(`client connected to TCP server on port ${port}`);
 		});
 
 		tcpServer.listen(port, () => {
-			console.log(`TCP server listening on port ${port}`);
+			//console.log(`TCP server listening on port ${port}`);
 		});
 
 		tcpServer.on("connection", (socket) => {
